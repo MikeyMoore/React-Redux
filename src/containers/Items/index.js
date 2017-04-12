@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addToCart } from '../../actions';
 import './Items.css';
 
 export class Items extends Component {
 
   renderList = () => {
-    const { items } = this.props;
+    const { items, addToCartAction } = this.props;
     return items.map((item) => (
       <li
         key={item.id}
         className={'Items-list-item'}
-        onClick={() => console.log('still need to write this function, added to store!')}
+        onClick={() => addToCartAction(item)}
       >
-        <img role="presentation" src={item.link} />
+        <img role="presentation" className={'Items-image'} src={item.link} />
         <span>{item.title}</span>
       </li>
     ))
@@ -20,7 +21,7 @@ export class Items extends Component {
 
   render() {
     return (
-      <ul className={'Items-list-item'}>
+      <ul className={'Items-list'}>
         {this.renderList()}
       </ul>
     )
@@ -32,4 +33,8 @@ const mapStateToProps = (reduxState) => ({
   items: reduxState.items
 })
 
-export default connect(mapStateToProps)(Items)
+const mapDispatchToProps = (dispatch) => ({
+  addToCartAction: (item) => dispatch(addToCart(item))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Items)
