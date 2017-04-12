@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { removeFromCart } from '../../actions';
 import './ShoppingCart.css';
 
 export class ShoppingCart extends Component {
 
   renderShoppingCart = () => {
-    const { shoppingCart } = this.props;
+    const { shoppingCart, removeFromCartDispatch } = this.props;
     return shoppingCart.map((item) => {
       return (
         <li
-          onClick={() => console.log('remove from cart')}
+          onClick={() => removeFromCartDispatch(item.id)}
           key={item.id}
           className={'SC-list-item'}
         >
@@ -34,6 +35,10 @@ const mapStateToProps = ({ shoppingCart }) => ({
   shoppingCart,
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  removeFromCartDispatch: (id) => dispatch(removeFromCart(id))
+})
+
 /*
   function connect(mapStateToProps, mapDispatchToProps) {
     return function(ourComponent) {
@@ -42,4 +47,4 @@ const mapStateToProps = ({ shoppingCart }) => ({
   }
 */
 
-export default connect(mapStateToProps)(ShoppingCart)
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)
