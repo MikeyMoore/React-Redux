@@ -14,7 +14,7 @@ export class ShoppingCart extends Component {
           key={item.id}
           className={'SC-list-item'}
         >
-          <img role="presentation" src={item.link} />
+          <img alt="" src={item.link} />
           {item.title}
         </li>
       )
